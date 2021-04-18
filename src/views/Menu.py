@@ -6,7 +6,7 @@ class Menu(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="Design Patterns")
-        Gtk.Window.set_default_size (self,800,250)
+        Gtk.Window.set_default_size (self,800,800)
 
         #Main Container
         self.set_border_width(3)
