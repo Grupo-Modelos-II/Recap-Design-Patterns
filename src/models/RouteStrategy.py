@@ -4,21 +4,31 @@ from pandas import read_csv, DataFrame
 
 class RouteStrategy(metaclass=ABCMeta):
 
-    def upload(self, data: str) -> None:
+    def upload(self, data):
         self._csv: DataFrame = read_csv(data)
+        self.clean()
+
+    def clean(self):
+        self._csv = self._csv.filter([
+            "blueTeamTag",
+            "redTeamTag",
+            "gamelength",
+            "bInhibs",
+            "rInhibs",
+            "rDragons",
+            "bDragons",
+            "rResult",
+            "bResult"
+        ])
 
     @abstractmethod
-    def clean(self) -> None:
+    def filtter(self, team):
         pass
 
     @abstractmethod
-    def filtter(self) -> None:
-        pass
-
-    @abstractmethod
-    def results(self) -> None:
+    def results(self):
         pass
 
     @property
-    def csv(self) -> DataFrame:
+    def csv(self):
         return self._csv

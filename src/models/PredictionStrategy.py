@@ -2,10 +2,7 @@ from .RouteStrategy import RouteStrategy
 
 class PredictionStrategy(RouteStrategy):
 
-    def clean(self):
-        pass
-
-    def filtter(self):
+    def filtter(self, team):
         pass
 
     def results(self):
