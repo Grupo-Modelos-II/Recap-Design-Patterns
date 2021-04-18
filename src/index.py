@@ -1,3 +1,5 @@
+#!.env/bin/python
+
 from views.Menu import Menu
 
 if __name__ == '__main__':
