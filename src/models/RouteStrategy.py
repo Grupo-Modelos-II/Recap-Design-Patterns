@@ -1,19 +1,34 @@
 from abc import ABCMeta,abstractmethod
 
+from pandas import read_csv, DataFrame
+
 class RouteStrategy(metaclass=ABCMeta):
 
-    @abstractmethod
-    def upload(self,data):
-        pass
+    def upload(self, data):
+        self._csv: DataFrame = read_csv(data)
+        self.clean()
 
-    @abstractmethod
     def clean(self):
-        pass
+        self._csv = self._csv.filter([
+            "blueTeamTag",
+            "redTeamTag",
+            "gamelength",
+            "bInhibs",
+            "rInhibs",
+            "rDragons",
+            "bDragons",
+            "rResult",
+            "bResult"
+        ])
 
     @abstractmethod
-    def filtter(self):
+    def filtter(self, team):
         pass
 
     @abstractmethod
     def results(self):
         pass
+
+    @property
+    def csv(self):
+        return self._csv
