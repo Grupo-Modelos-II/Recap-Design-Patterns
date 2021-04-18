@@ -32,3 +32,7 @@ class RouteStrategy(metaclass=ABCMeta):
     @property
     def csv(self):
         return self._csv
+
+    def get_team_list(self):
+        return self._csv.iterrows()
+            
