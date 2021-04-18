@@ -1,4 +1,4 @@
 .env
-controllers/__pycache__
-models/__pycache__
-views/__pycache__
+src/controllers/__pycache__
+srcmodels/__pycache__
+src/views/__pycache__
