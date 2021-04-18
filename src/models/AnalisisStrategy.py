@@ -25,4 +25,4 @@ class AnalisisStrategy(RouteStrategy):
             
 
     def results(self):
-        print(self._results)
+        return self._results
