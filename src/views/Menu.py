@@ -66,9 +66,22 @@ class Menu(Gtk.Window):
     
         self.notebook.append_page(self.page1, Gtk.Label(label="Analizar"))
 
-        self.page2 = Gtk.Box()
-        self.page2.set_border_width(10)
-        self.page2.add(Gtk.Label(label="A page with an image for a Title."))
+        self.page2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
+        self.page2.set_border_width(30)
+
+        #Contenido pagina 2
+        combo_box_container = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,spacing=100)
+
+        self.combo_box_page21 = Gtk.ComboBoxText()
+        [self.combo_box_page21.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        combo_box_container.add(self.combo_box_page21)
+
+        self.combo_box_page22 = Gtk.ComboBoxText()
+        [self.combo_box_page22.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        combo_box_container.add(self.combo_box_page22)
+
+        self.page2.add(combo_box_container)
+
         self.notebook.append_page(self.page2, Gtk.Label(label="Predicción"))
 
         #Information Page 1
