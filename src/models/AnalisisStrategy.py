@@ -20,7 +20,8 @@ class AnalisisStrategy(RouteStrategy):
         total = 0
         count = 1
 
-        content = []
+        content_time = []
+        content_performance = []
 
         for index, row in data.iterrows():
             isBlueTeam = row["blueTeamTag"] == team
@@ -42,10 +43,12 @@ class AnalisisStrategy(RouteStrategy):
                 total_heralds += heralds
                 total_won += won
                 total = .15*dragons + .3*towers + .3*inhibs + .1*heralds + .15*barons
-                content.append({"time": time, "perfomance": total})
-
+                content_time.append(time)
+                content_performance.append(total)
+        
+        content = {"time": content_time, "performance": content_performance}
         time_average /= count
-        data = {"Total Inhibidores": total_inhibs, "Total Dragones": total_dragons, "Partidas Ganadas": total_won, "Tiempo Promedio": time_average}
+        data = {"inhibs": total_inhibs, "dragons": total_dragons, "won": total_won, "average": time_average}
         self._results = {"Results": data, "Graph": content}
 
 

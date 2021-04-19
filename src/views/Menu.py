@@ -1,3 +1,7 @@
+import matplotlib
+matplotlib.use("GTK3Agg")
+import matplotlib.pyplot as plt
+
 import pgi
 pgi.require_version("Gtk", "3.0")
 from pgi.repository import Gtk
@@ -15,15 +19,28 @@ class Menu(Gtk.Window):
     def handle_analysis(self,widget):
         data = self._controller.exec_strategy(self._combo_box_1.get_active_text())
 
-        self._label_result.set_label(str(data["Graph"]))
+        label = data["Results"]
+        label = f"Total Inhibidores: {label['inhibs']} Inhibidores Destruidos\nTotal Dragones: {label['dragons']} Dragones Asesinados\nPartidas Ganadas: {label['won']}\nTiempo Promedio: {label['average']:.6} Minutos"
+
+        self._label_result.set_label(label)
+
+        plt.hist2d(data["Graph"]["time"], data["Graph"]["performance"])
+        # plt.legend()
+        plt.savefig('result', transparent=True)
+        self._result.set_from_file("result.png")
         
 
 
     def handle_prediction(self,widget):
-        print("Prediction")
+        blue_team, red_team = (self.combo_box_page21.get_active_text(), self.combo_box_page22.get_active_text())
+        
+        text = (f"Prediction {self.combo_box_page21.get_active_text()} {self.combo_box_page22.get_active_text()}", "No sea imbecil")[blue_team == red_team]
+        
+        print(text)
 
 
     def init_template(self):
+        self.set_resizable(False)
         #Main Container
         self.set_border_width(3)
 
@@ -54,16 +71,35 @@ class Menu(Gtk.Window):
     
         self.notebook.append_page(self.page1, Gtk.Label(label="Analizar"))
 
-        self.page2 = Gtk.Box()
-        self.page2.set_border_width(10)
-        self.page2.add(Gtk.Label(label="A page with an image for a Title."))
+        self.page2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
+        self.page2.set_border_width(30)
+
+        #Contenido pagina 2
+        combo_box_container = Gtk.VBox(orientation=Gtk.Orientation.HORIZONTAL,spacing=100)
+
+        self.combo_box_page21 = Gtk.ComboBoxText()
+        [self.combo_box_page21.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        combo_box_container.add(self.combo_box_page21)
+
+        self.combo_box_page22 = Gtk.ComboBoxText()
+        [self.combo_box_page22.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        combo_box_container.add(self.combo_box_page22)
+
+        self.page2.add(combo_box_container)
+        self.page2.add(self._btn_prediction)
+
         self.notebook.append_page(self.page2, Gtk.Label(label="Predicción"))
 
-        #Label Page 1 Results
+        #Information Page 1
+        ## Label Page 1 Results
         self._label_result = Gtk.Label()
         self._label_result.set_label("")
 
         self.page1.add(self._label_result)
+
+        ## Image Page 1 Result
+        self._result = Gtk.Image()
+        self.page1.add(self._result)
 
 
         self.connect("destroy", Gtk.main_quit)
