@@ -1,11 +1,13 @@
 from models.AnalisisStrategy import AnalisisStrategy
+from pathlib import Path
 
 class Controller:
 
     def __init__(self):
         self._strategy = AnalisisStrategy()
-        self._strategy.upload('/home/jema/Git/GitHub/Grupales/Recap-Design-Patterns/docs/LeagueofLegends.csv')
-        # self._strategy.upload('/home/user/Documentos/Recap-Design-Patterns/docs/LeagueofLegends.csv')
+        #self._strategy.upload('/home/jema/Git/GitHub/Grupales/Recap-Design-Patterns/docs/LeagueofLegends.csv')
+        self._strategy.upload(Path('docs','LeagueofLegends.csv'))
+        #self._strategy.upload('/home/user/Documentos/Recap-Design-Patterns/docs/LeagueofLegends.csv')
 
     def select_strategy(self,strategy):
         self._strategy = strategy

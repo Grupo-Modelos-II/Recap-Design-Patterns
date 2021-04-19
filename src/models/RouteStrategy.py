@@ -1,5 +1,4 @@
 from abc import ABCMeta,abstractmethod
-
 from pandas import read_csv
 
 class RouteStrategy(metaclass=ABCMeta):
@@ -12,6 +11,7 @@ class RouteStrategy(metaclass=ABCMeta):
         self.clean()
 
     def clean(self):
+        self._csv.fillna('NAN')
         self._csv = self.csv.filter([
             "blueTeamTag",
             "redTeamTag",

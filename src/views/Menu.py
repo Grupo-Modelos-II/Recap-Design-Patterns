@@ -13,7 +13,9 @@ class Menu(Gtk.Window):
 
        
     def handle_analysis(self,widget):
-        print(self._controller.exec_strategy('TSM'))
+        print(self._controller.exec_strategy(self._combo_box_1.get_active_text()))
+        
+
 
     def handle_prediction(self,widget):
         print("Prediction")
@@ -39,14 +41,7 @@ class Menu(Gtk.Window):
 
         # Combo Box Page 1
         self._combo_box_1 = Gtk.ComboBoxText()
-
-        [self._combo_box_1.append(id=None,text=name) for name in self._controller.get_team_list()]
-        
-        """self._combo_box_1.append(id=None,text='Java')
-        self._combo_box_1.append(id=None,text='Python')
-        self._combo_box_1.append(id=None,text='Dart')
-        self._combo_box_1.append(id=None,text='TypeScript')
-        self._combo_box_1.append(id=None,text='JavaScript')"""
+        [self._combo_box_1.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
 
         #Configurando paginas
         self.page1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
