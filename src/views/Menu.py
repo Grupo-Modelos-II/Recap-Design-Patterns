@@ -13,8 +13,9 @@ class Menu(Gtk.Window):
 
        
     def handle_analysis(self,widget):
-        # print(self._controller.exec_strategy(self._combo_box_1.get_active_text()))
-        self._label_result.set_label(str(self._controller.exec_strategy(self._combo_box_1.get_active_text())))
+        data = self._controller.exec_strategy(self._combo_box_1.get_active_text())
+
+        self._label_result.set_label(str(data["Graph"]))
         
 
 
