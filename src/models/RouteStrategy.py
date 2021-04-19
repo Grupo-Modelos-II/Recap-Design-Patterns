@@ -1,15 +1,18 @@
 from abc import ABCMeta,abstractmethod
 
-from pandas import read_csv, DataFrame
+from pandas import read_csv
 
 class RouteStrategy(metaclass=ABCMeta):
 
+    def __init__(self):
+        self._csv = None
+
     def upload(self, data):
-        self._csv: DataFrame = read_csv(data)
+        self._csv = read_csv(data)
         self.clean()
 
     def clean(self):
-        self._csv = self._csv.filter([
+        self._csv = self.csv.filter([
             "blueTeamTag",
             "redTeamTag",
             "gamelength",
@@ -34,5 +37,10 @@ class RouteStrategy(metaclass=ABCMeta):
         return self._csv
 
     def get_team_list(self):
-        return self._csv.iterrows()
-            
+        array = []
+        for index, obj in self._csv.iterrows():
+            (name_blue, name_red) = obj.filter(["blueTeamTag", "redTeamTag"])
+            # array.append(name_blue)
+            if name_blue not in array:
+                array.append(name_blue)
+        return array

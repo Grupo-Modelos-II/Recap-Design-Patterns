@@ -3,6 +3,9 @@ from ast import literal_eval
 
 class AnalisisStrategy(RouteStrategy):
 
+    def __init__(self):
+        RouteStrategy.__init__(self)
+
     def filtter(self, team):
         self._csv = self._csv[(self._csv["blueTeamTag"] == team) | (self._csv["redTeamTag"] == team)]
 

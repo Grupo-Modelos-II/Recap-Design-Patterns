@@ -40,7 +40,7 @@ class Menu(Gtk.Window):
         # Combo Box Page 1
         self._combo_box_1 = Gtk.ComboBoxText()
 
-        [self._combo_box_1.append(id=index,text=obj) for index,obj in self._controller.get_team_list() if obj not in self._combo_box_1]
+        [self._combo_box_1.append(id=None,text=name) for name in self._controller.get_team_list()]
         
         """self._combo_box_1.append(id=None,text='Java')
         self._combo_box_1.append(id=None,text='Python')
