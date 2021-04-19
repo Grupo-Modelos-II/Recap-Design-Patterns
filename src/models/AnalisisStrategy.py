@@ -1,15 +1,10 @@
 from .RouteStrategy import RouteStrategy
 from ast import literal_eval
-from pandas.io.parsers import read_csv
 
 class AnalisisStrategy(RouteStrategy):
 
-    def __init__(self, data):
-        self._upload(data)
-
-    def _upload(self, data):
-        self._csv = read_csv(data)
-        self.clean()
+    def _upload(self, data_set):
+        self._csv = data_set
 
     def _clean(self):
         self._csv = self.csv.filter([
@@ -32,7 +27,7 @@ class AnalisisStrategy(RouteStrategy):
 
     def _filter(self, team):
 
-        data = self._csv[(self._csv["blueTeamTag"] == team) | (self._csv["redTeamTag"] == team)]
+        data = self._csv[(self._csv["blueTeamTag"] == team[0]) | (self._csv["redTeamTag"] == team[0])]
 
         total_won = 0
         time_average = 0
@@ -51,7 +46,7 @@ class AnalisisStrategy(RouteStrategy):
         content_performance_lose = []
 
         for index, row in data.iterrows():
-            isBlueTeam = row["blueTeamTag"] == team
+            isBlueTeam = row["blueTeamTag"] == team[0]
             won = int(row["bResult" if isBlueTeam else "rResult"])
 
             count += 1
@@ -83,6 +78,8 @@ class AnalisisStrategy(RouteStrategy):
         self._results = {"Results": data, "Graph": {"won": content_won, "lose": content_lose}}
 
 
-    def results(self, team):
+    def results(self,data_set,team):
+        self._upload(data_set)
+        self._clean()
         self._filter(team)
         return self._results

@@ -1,11 +1,12 @@
-import matplotlib
-matplotlib.use("GTK3Agg")
-import matplotlib.pyplot as plt
-
 import pgi
-pgi.require_version("Gtk", "3.0")
+import matplotlib
+import matplotlib.pyplot as plt
+from functions import functions as f
 from pgi.repository import Gtk
 from controllers.Controller import Controller
+
+matplotlib.use("GTK3Agg")
+pgi.require_version("Gtk", "3.0")
 
 class Menu(Gtk.Window):
 
@@ -41,7 +42,6 @@ class Menu(Gtk.Window):
 
     def handle_prediction(self,widget):
         blue_team, red_team = (self.combo_box_page21.get_active_text(), self.combo_box_page22.get_active_text())
-        
         text = (f"Prediction {self.combo_box_page21.get_active_text()} {self.combo_box_page22.get_active_text()}", "No sea imbecil")[blue_team == red_team]
         
         print(text)
@@ -68,7 +68,7 @@ class Menu(Gtk.Window):
 
         # Combo Box Page 1
         self._combo_box_1 = Gtk.ComboBoxText()
-        [self._combo_box_1.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        [self._combo_box_1.append(id=None,text=str(name)) for name in f.get_team_list()]
 
         #Configurando paginas
         self.page1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
@@ -86,11 +86,11 @@ class Menu(Gtk.Window):
         combo_box_container = Gtk.VBox(orientation=Gtk.Orientation.HORIZONTAL,spacing=100)
 
         self.combo_box_page21 = Gtk.ComboBoxText()
-        [self.combo_box_page21.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        [self.combo_box_page21.append(id=None,text=str(name)) for name in f.get_team_list()]
         combo_box_container.add(self.combo_box_page21)
 
         self.combo_box_page22 = Gtk.ComboBoxText()
-        [self.combo_box_page22.append(id=None,text=str(name)) for name in self._controller.get_team_list()]
+        [self.combo_box_page22.append(id=None,text=str(name)) for name in f.get_team_list()]
         combo_box_container.add(self.combo_box_page22)
 
         self.page2.add(combo_box_container)

@@ -15,5 +15,5 @@ class RouteStrategy(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def results(self):
+    def results(self,data_set,teams):
         pass

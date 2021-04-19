@@ -1,34 +1,20 @@
 from models.AnalisisStrategy import AnalisisStrategy
-from pathlib import Path
+from models.PredictionStrategy import PredictionStrategy
+from functions import functions as f
 
 class Controller:
 
     def __init__(self):
         self._strategy = None
 
-    def create_analisis(self, path):
+    def create_analisis(self):
         self._strategy = AnalisisStrategy()
 
-        def create_analisis(self, path):
-        self._strategy = AnalisisStrategy(Path('docs','LeagueofLegends.csv'))
+    def create_prediction(self):
+        self._strategy = PredictionStrategy()
 
-    def exec_strategy(self,team_name):
-        return self._strategy.results()
+    def exec_strategy(self,*teams):
+        return self._strategy.results(f.get_csv(),teams)
 
-    def get_team_list(self):
-        return self._strategy.get_team_list()
-
-"""
-
-    def get_team_list(self):
-        array = []
-        for index, obj in self._csv.iterrows():
-            (name_blue, name_red) = obj.filter(["blueTeamTag", "redTeamTag"])
-            # array.append(name_blue)
-            if name_blue not in array:
-                array.append(name_blue)
-        return array
-
-"""
 
 # AnalisisStrategy(Path('docs','LeagueofLegends.csv'))
