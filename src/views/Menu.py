@@ -17,6 +17,8 @@ class Menu(Gtk.Window):
 
        
     def handle_analysis(self,widget):
+        plt.cla()
+        plt.clf()
         data = self._controller.exec_strategy(self._combo_box_1.get_active_text())
 
         label = data["Results"]
@@ -24,9 +26,15 @@ class Menu(Gtk.Window):
 
         self._label_result.set_label(label)
 
-        plt.hist2d(data["Graph"]["time"], data["Graph"]["performance"])
-        # plt.legend()
-        plt.savefig('result', transparent=True)
+        won = data["Graph"]["won"]
+        lose = data["Graph"]["lose"]
+
+        plt.scatter(won["time"], won["performance"], color="green")
+        plt.scatter(lose["time"], lose["performance"], color="red")
+        plt.xlabel("Duración de la Partida (Minutos)")
+        plt.ylabel("Rendimiento del Equipo")
+        plt.legend(["Partidas Ganadas", "Partidas Perdidas"])
+        plt.savefig('result')
         self._result.set_from_file("result.png")
         
 
