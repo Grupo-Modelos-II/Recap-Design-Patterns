@@ -10,23 +10,43 @@ class AnalisisStrategy(RouteStrategy):
 
         data = self._csv[(self._csv["blueTeamTag"] == team) | (self._csv["redTeamTag"] == team)]
 
-        timeAverage = 0
-        totalInhibs = 0
-        totalDragons = 0
-        totalWon = 0
-        count = 0
+        total_won = 0
+        time_average = 0
+        total_inhibs = 0
+        total_dragons = 0
+        total_towers = 0
+        total_barons = 0
+        total_heralds = 0
+        total = 0
+        count = 1
+
+        content = []
 
         for index, row in data.iterrows():
             isBlueTeam = row["blueTeamTag"] == team
-            timeAverage += row["gamelength"]
-            totalInhibs += len(literal_eval(row["bInhibs" if isBlueTeam else "rInhibs"]))
-            totalDragons += len(literal_eval(row["bDragons" if isBlueTeam else "rDragons"]))
-            totalWon += row["bResult" if isBlueTeam else "rResult"]
-            count += 1
-        
-        count = count if count else 1
-        timeAverage /= count
-        self._results = {"Total Inhibidores": totalInhibs, "Total Dragones": totalDragons, "Partidas Ganadas": totalWon, "Tiempo Promedio": timeAverage}
+            won = int(row["bResult" if isBlueTeam else "rResult"])
+
+            if won:
+                count += 1
+                time = row["gamelength"]
+                inhibs = len(literal_eval(row["bInhibs" if isBlueTeam else "rInhibs"]))
+                dragons = len(literal_eval(row["bDragons" if isBlueTeam else "rDragons"]))
+                towers = len(literal_eval(row["bTowers" if isBlueTeam else "rTowers"]))
+                heralds = len(literal_eval(row["bHeralds" if isBlueTeam else "rHeralds"]))
+                barons = len(literal_eval(row["bBarons" if isBlueTeam else "rBarons"]))
+                time_average += time
+                total_inhibs += inhibs
+                total_dragons += dragons
+                total_towers += towers
+                total_barons += barons
+                total_heralds += heralds
+                total_won += won
+                total = .15*dragons + .3*towers + .3*inhibs + .1*heralds + .15*barons
+                content.append({"time": time, "perfomance": total})
+
+        time_average /= count
+        data = {"Total Inhibidores": total_inhibs, "Total Dragones": total_dragons, "Partidas Ganadas": total_won, "Tiempo Promedio": time_average}
+        self._results = {"Results": data, "Graph": content}
 
 
     def results(self):

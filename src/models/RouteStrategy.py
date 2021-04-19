@@ -20,6 +20,12 @@ class RouteStrategy(metaclass=ABCMeta):
             "rInhibs",
             "rDragons",
             "bDragons",
+            "rTowers",
+            "bTowers",
+            "rBarons",
+            "bBarons",
+            "rHeralds",
+            "bHeralds",
             "rResult",
             "bResult"
         ])
