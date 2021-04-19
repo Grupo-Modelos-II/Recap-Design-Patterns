@@ -1,12 +1,36 @@
 from .RouteStrategy import RouteStrategy
 from ast import literal_eval
+from pandas.io.parsers import read_csv
 
 class AnalisisStrategy(RouteStrategy):
 
-    def __init__(self):
-        RouteStrategy.__init__(self)
+    def __init__(self, data):
+        self._upload(data)
 
-    def filtter(self, team):
+    def _upload(self, data):
+        self._csv = read_csv(data)
+        self.clean()
+
+    def _clean(self):
+        self._csv = self.csv.filter([
+            "blueTeamTag",
+            "redTeamTag",
+            "gamelength",
+            "bInhibs",
+            "rInhibs",
+            "rDragons",
+            "bDragons",
+            "rTowers",
+            "bTowers",
+            "rBarons",
+            "bBarons",
+            "rHeralds",
+            "bHeralds",
+            "rResult",
+            "bResult"
+        ])
+
+    def _filter(self, team):
 
         data = self._csv[(self._csv["blueTeamTag"] == team) | (self._csv["redTeamTag"] == team)]
 
@@ -59,5 +83,6 @@ class AnalisisStrategy(RouteStrategy):
         self._results = {"Results": data, "Graph": {"won": content_won, "lose": content_lose}}
 
 
-    def results(self):
+    def results(self, team):
+        self._filter(team)
         return self._results
