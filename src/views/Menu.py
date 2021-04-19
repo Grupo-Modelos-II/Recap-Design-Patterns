@@ -1,3 +1,7 @@
+import matplotlib
+matplotlib.use("GTK3Agg")
+import matplotlib.pyplot as plt
+
 import pgi
 pgi.require_version("Gtk", "3.0")
 from pgi.repository import Gtk
@@ -15,7 +19,15 @@ class Menu(Gtk.Window):
     def handle_analysis(self,widget):
         data = self._controller.exec_strategy(self._combo_box_1.get_active_text())
 
-        self._label_result.set_label(str(data["Graph"]))
+        label = data["Results"]
+        label = f"Total Inhibidores: {label['inhibs']} Inhibidores Destruidos\nTotal Dragones: {label['dragons']} Dragones Asesinados\nPartidas Ganadas: {label['won']}\nTiempo Promedio: {label['average']} Minutos"
+
+        self._label_result.set_label(label)
+
+        plt.hist2d(data["Graph"]["time"], data["Graph"]["performance"])
+        # plt.legend()
+        plt.savefig('result', transparent=True)
+        self._result.set_from_file("result.png")
         
 
 
@@ -59,11 +71,16 @@ class Menu(Gtk.Window):
         self.page2.add(Gtk.Label(label="A page with an image for a Title."))
         self.notebook.append_page(self.page2, Gtk.Label(label="Predicción"))
 
-        #Label Page 1 Results
+        #Information Page 1
+        ## Label Page 1 Results
         self._label_result = Gtk.Label()
         self._label_result.set_label("")
 
         self.page1.add(self._label_result)
+
+        ## Image Page 1 Result
+        self._result = Gtk.Image()
+        self.page1.add(self._result)
 
 
         self.connect("destroy", Gtk.main_quit)
