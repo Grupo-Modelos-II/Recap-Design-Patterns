@@ -7,7 +7,8 @@ class AnalisisStrategy(RouteStrategy):
         RouteStrategy.__init__(self)
 
     def filtter(self, team):
-        self._csv = self._csv[(self._csv["blueTeamTag"] == team) | (self._csv["redTeamTag"] == team)]
+
+        data = self._csv[(self._csv["blueTeamTag"] == team) | (self._csv["redTeamTag"] == team)]
 
         timeAverage = 0
         totalInhibs = 0
@@ -15,7 +16,7 @@ class AnalisisStrategy(RouteStrategy):
         totalWon = 0
         count = 0
 
-        for index, row in self._csv.iterrows():
+        for index, row in data.iterrows():
             isBlueTeam = row["blueTeamTag"] == team
             timeAverage += row["gamelength"]
             totalInhibs += len(literal_eval(row["bInhibs" if isBlueTeam else "rInhibs"]))
@@ -23,9 +24,10 @@ class AnalisisStrategy(RouteStrategy):
             totalWon += row["bResult" if isBlueTeam else "rResult"]
             count += 1
         
+        count = count if count else 1
         timeAverage /= count
         self._results = {"Total Inhibidores": totalInhibs, "Total Dragones": totalDragons, "Partidas Ganadas": totalWon, "Tiempo Promedio": timeAverage}
-            
+
 
     def results(self):
         return self._results
