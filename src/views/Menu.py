@@ -13,7 +13,8 @@ class Menu(Gtk.Window):
 
        
     def handle_analysis(self,widget):
-        print(self._controller.exec_strategy(self._combo_box_1.get_active_text()))
+        # print(self._controller.exec_strategy(self._combo_box_1.get_active_text()))
+        self._label_result.set_label(str(self._controller.exec_strategy(self._combo_box_1.get_active_text())))
         
 
 
@@ -56,6 +57,12 @@ class Menu(Gtk.Window):
         self.page2.set_border_width(10)
         self.page2.add(Gtk.Label(label="A page with an image for a Title."))
         self.notebook.append_page(self.page2, Gtk.Label(label="Predicción"))
+
+        #Label Page 1 Results
+        self._label_result = Gtk.Label()
+        self._label_result.set_label("")
+
+        self.page1.add(self._label_result)
 
 
         self.connect("destroy", Gtk.main_quit)
