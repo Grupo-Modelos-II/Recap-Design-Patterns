@@ -10,7 +10,7 @@ class PredictionStrategy(RouteStrategy):
         self._csv = data_set
 
     def _clean(self):
-        self._csv = self.csv.filter([
+        self._csv = self._csv.filter([
             "blueTeamTag",
             "redTeamTag",
             "gamelength",
@@ -25,11 +25,13 @@ class PredictionStrategy(RouteStrategy):
             "rHeralds",
             "bHeralds",
             "rResult",
-            "bResult"
+            "bResult",
+            "League"
         ])
 
     def _filter(self,teams):
         self._predict_facate = PrectFacade(self._csv, teams[0], teams[1])
+        self._results = self._predict_facate.execute()
 
     def results(self,data_set,teams):
         self._upload(data_set)
