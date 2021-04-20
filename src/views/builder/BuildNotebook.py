@@ -69,7 +69,7 @@ class BuildNotebook(BuildGUI):
         combo_box_container.add(self.combo_box_page22)
 
         # Button 
-        self._btn_prediction = Gtk.Button(label="Realziar Prediccion")
+        self._btn_prediction = Gtk.Button(label="Realizar Predicción")
 
         labels_container = Gtk.VBox(orientation=Gtk.Orientation.HORIZONTAL,spacing=100)
 
