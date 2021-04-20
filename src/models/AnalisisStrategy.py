@@ -27,7 +27,10 @@ class AnalisisStrategy(RouteStrategy):
 
     def _filter(self, teams):
 
+        self._csv.fillna('nan')
+        
         data = self._csv[(self._csv["blueTeamTag"] == teams[0]) | (self._csv["redTeamTag"] == teams[0])]
+
 
         total_won = 0
         time_average = 0

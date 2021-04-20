@@ -1,6 +1,6 @@
 import pandas as pd
-from TeamModel import Team
-from MatchModel import Match
+from .TeamModel import Team
+from .MatchModel import Match
 
 class PrectFacade:
 
@@ -8,9 +8,9 @@ class PrectFacade:
 		self._csv = data
 		self._teamA = teamA
 		self._teamB = teamB
-		self._teamAInfo = none
-		self._teamBInfo = none
-		self._match = none
+		self._teamAInfo = None
+		self._teamBInfo = None
+		self._match = None
 
 	def execute(self):
 		self._getWinrate()
@@ -18,11 +18,11 @@ class PrectFacade:
 		rateA = self._teamAInfo.getWinrateLadoA() + self._teamAInfo.getWinrate()*2
 		rateB = self._teamBInfo.getWinrateLadoB() + self._teamBInfo.getWinrate()*2
 
-		if self._match != none:
+		if self._match != None:
 			rateA = self._match.getWinrates[0]*3 + rateA
 			rateB = self._match.getWinrates[0]*3 + rateA
 
-		return [self._teamA, self._teamB, rateA*100/(rateA + rateB),100 - (rateA*100/(rateA + rateB))]
+		return [self._teamA, self._teamB, rateA/(rateA + rateB),(rateB/(rateA + rateB))]
 
 	def _getWinrate(self):
 		winsLadoA = self._csv['League'][(self._csv['blueTeamTag'] == self._teamA) & (self._csv['bResult'] == 1)].count()

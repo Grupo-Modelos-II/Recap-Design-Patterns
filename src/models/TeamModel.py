@@ -6,7 +6,7 @@ class Team:
 		self._winsLadoR = winsLadoR
 		self._defeatsLadoR = defeatsLadoR
 		self._winrateLadoA = self._winsLadoA*100/(self._winsLadoA+self._defeatsLadoA)
-		self._winrateLadoR = self._winsLadoR*100/(self._winsLadoR+self._defeatsLadoR)
+		self._winrateLadoB = self._winsLadoR*100/(self._winsLadoR+self._defeatsLadoR)
 		self._winrate = (self._winsLadoA+self._winsLadoR)*100/(self._winsLadoA+self._winsLadoR+self._defeatsLadoA+self._defeatsLadoR)
 
 	def getWinrateLadoA(self):
@@ -17,6 +17,3 @@ class Team:
 
 	def getWinrate(self):
 		return self._winrate
-
-	def getName(self):
-		return self._name

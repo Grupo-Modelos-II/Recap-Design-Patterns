@@ -30,6 +30,7 @@ class PredictionStrategy(RouteStrategy):
         ])
 
     def _filter(self, teams):
+        self._csv.fillna('nan')
         self._predict_facate = PrectFacade(self._csv, teams[0], teams[1])
         self._results = self._predict_facate.execute()
 

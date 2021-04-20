@@ -45,18 +45,29 @@ class Menu(Gtk.Window):
         self._controller.create_prediction()
         blue_team, red_team = (self.combo_box_page21.get_active_text(), self.combo_box_page22.get_active_text())
 
-        if blue_team == red_team:
+        if blue_team == red_team or blue_team is None or red_team is None:
             dialog = Gtk.MessageDialog(transient_for=self, flags=0, message_type=Gtk.MessageType.INFO, buttons=Gtk.ButtonsType.OK, text="No sea imbecil")
             dialog.run()
             dialog.destroy()
         else:    
             data = self._controller.exec_strategy(blue_team, red_team)
-            self._label_prediction.set_label(str(data))
+            data = [{"team": data[0], "value": data[2]}, {"team": data[1], "value": data[3]}]
+
+            self._team_a_result.set_opacity(1)
+            self._team_b_result.set_opacity(1)
+
+            if data[0]["value"] == 0:
+                self._team_a_result.set_opacity(0)
+            elif data[1]["value"] == 0:
+                self._team_b_result.set_opacity(0)
+
+            self.label_prediction_team_a.set_label(f'{data[0]["team"]}\n{(data[0]["value"] * 100):.4}%')
+            self.label_prediction_team_b.set_label(f'{data[1]["team"]}\n{(data[1]["value"] * 100):.4}%')
 
             self._result_page_2.set_opacity(1)
 
-            self._team_a_result.set_size_request(200, 20)
-            self._team_b_result.set_size_request(200, 20)
+            self._team_a_result.set_size_request(data[0]["value"]*200, 20)
+            self._team_b_result.set_size_request(data[1]["value"]*200, 20)
 
 
     def init_template(self):
@@ -124,7 +135,15 @@ class Menu(Gtk.Window):
         #Information Page 2
         ## LevelBar Page 2 Results
 
-        self._label_prediction = Gtk.Label()
+        labels_container = Gtk.VBox(orientation=Gtk.Orientation.HORIZONTAL,spacing=100)
+
+        self.label_prediction_team_a = Gtk.Label()
+        self.label_prediction_team_b = Gtk.Label()
+
+        labels_container.add(self.label_prediction_team_a)
+        labels_container.add(self.label_prediction_team_b)
+
+        self.page2.add(labels_container)
 
         self._result_page_2 = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL)
         self._team_a_result = Gtk.LevelBar()
@@ -136,12 +155,11 @@ class Menu(Gtk.Window):
         self._team_a_result.set_size_request(0, 0)
         self._team_b_result.set_size_request(0, 0)
 
-        self._result_page_2.pack1(self._team_a_result, True, True)
-        self._result_page_2.pack2(self._team_b_result, True, True)
+        self._result_page_2.pack1(self._team_a_result, False, False)
+        self._result_page_2.pack2(self._team_b_result, False, False)
 
         self._result_page_2.set_opacity(0)
 
-        self.page2.add(self._label_prediction)
         self.page2.add(self._result_page_2)
 
         
