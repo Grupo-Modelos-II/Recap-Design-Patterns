@@ -44,7 +44,8 @@ class Menu(Gtk.Window):
     def handle_prediction(self,widget):
         self._controller.create_prediction()
         blue_team, red_team = (self.combo_box_page21.get_active_text(), self.combo_box_page22.get_active_text())
-        self._controller.exec_strategy(blue_team, red_team)
+        data = self._controller.exec_strategy(blue_team, red_team)
+        self._label_prediction.set_label(str(data))
         # text = (f"Prediction {self.combo_box_page21.get_active_text()} {self.combo_box_page22.get_active_text()}", "No sea imbecil")[blue_team == red_team]
 
 
@@ -109,6 +110,12 @@ class Menu(Gtk.Window):
         ## Image Page 1 Result
         self._result = Gtk.Image()
         self.page1.add(self._result)
+
+        #Information Page 1
+        self._label_prediction = Gtk.Label()
+        self._label_prediction.set_label("")
+
+        self.page2.add(self._label_prediction)
 
 
         self.connect("destroy", Gtk.main_quit)
