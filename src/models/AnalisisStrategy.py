@@ -87,7 +87,7 @@ class AnalisisStrategy(RouteStrategy):
             "Barones Asesinados": f"{total_barons}",
             "Partidas Ganadas": total_won,
             "Partidas Perdidas": total_lose,
-            "Tiempo Promedio": f"{time_average:.6} Minutos"
+            "Tiempo Promedio": f"{time_average:.5} Minutos"
         }
         self._results = {"Results": data, "Graph": {"won": content_won, "lose": content_lose}}
 

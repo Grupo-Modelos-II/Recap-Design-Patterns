@@ -141,6 +141,10 @@ class BuildNotebook(BuildGUI):
             elif data[1]["value"] == 0:
                 self._team_b_result.modify_bg(Gtk.StateType.NORMAL, Gdk.Color(0, 0, 65535))
 
+            if data[0]["value"] != data[0]["value"] and data[1]["value"] != data[1]["value"]:
+                data[0]["value"] = .5
+                data[1]["value"] = .5
+
             self.label_prediction_team_a.set_label(f'{data[0]["team"]}\n{(data[0]["value"] * 100):.4}%')
             self.label_prediction_team_b.set_label(f'{data[1]["team"]}\n{(data[1]["value"] * 100):.4}%')
 
