@@ -42,15 +42,21 @@ class Menu(Gtk.Window):
 
 
     def handle_prediction(self,widget):
-        """self._controller.create_prediction()
+        self._controller.create_prediction()
         blue_team, red_team = (self.combo_box_page21.get_active_text(), self.combo_box_page22.get_active_text())
-        data = self._controller.exec_strategy(blue_team, red_team)
-        self._label_prediction.set_label(str(data))"""
 
-        self._result_page_2.set_opacity(1)
+        if blue_team == red_team:
+            dialog = Gtk.MessageDialog(transient_for=self, flags=0, message_type=Gtk.MessageType.INFO, buttons=Gtk.ButtonsType.OK, text="No sea imbecil")
+            dialog.run()
+            dialog.destroy()
+        else:    
+            data = self._controller.exec_strategy(blue_team, red_team)
+            self._label_prediction.set_label(str(data))
 
-        self._team_a_result.set_size_request(200, 20)
-        self._team_b_result.set_size_request(200, 20)
+            self._result_page_2.set_opacity(1)
+
+            self._team_a_result.set_size_request(200, 20)
+            self._team_b_result.set_size_request(200, 20)
 
 
     def init_template(self):
@@ -117,12 +123,15 @@ class Menu(Gtk.Window):
 
         #Information Page 2
         ## LevelBar Page 2 Results
+
+        self._label_prediction = Gtk.Label()
+
         self._result_page_2 = Gtk.Paned(orientation=Gtk.Orientation.HORIZONTAL)
         self._team_a_result = Gtk.LevelBar()
         self._team_b_result = Gtk.LevelBar()
 
-        self._team_a_result.modify_bg(Gtk.StateType.NORMAL, Gdk.Color(65535, 0, 0))
-        self._team_b_result.modify_bg(Gtk.StateType.NORMAL, Gdk.Color(0, 0, 65535))
+        self._team_a_result.modify_bg(Gtk.StateType.NORMAL, Gdk.Color(0, 0, 65535))
+        self._team_b_result.modify_bg(Gtk.StateType.NORMAL, Gdk.Color(65535, 0, 0))
 
         self._team_a_result.set_size_request(0, 0)
         self._team_b_result.set_size_request(0, 0)
@@ -132,6 +141,7 @@ class Menu(Gtk.Window):
 
         self._result_page_2.set_opacity(0)
 
+        self.page2.add(self._label_prediction)
         self.page2.add(self._result_page_2)
 
         
