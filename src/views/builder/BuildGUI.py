@@ -3,27 +3,23 @@ from abc import ABC, abstractmethod, abstractproperty
 class BuildGUI(ABC):
 
     @abstractmethod
-    def buildPage1(self):
+    def _buildPage1(self):
         pass
 
     @abstractmethod
-    def buildPage2(self):
+    def _buildPage2(self):
         pass
 
     @abstractmethod
-    def handleAnalisis(self):
+    def _handleAnalysis(self):
         pass
 
     @abstractmethod
-    def handleAnalisis(self):
+    def _handlePrediction(self):
         pass
 
     @abstractmethod
-    def handlePrediction(self):
-        pass
-
-    @abstractmethod
-    def handleEvents(self):
+    def _handleEvents(self):
         pass
 
     @abstractmethod
