@@ -13,7 +13,7 @@ Las aplicaciones en Python usualmente hacen uso de paquetes y módulos que no fo
 
 La solución a este problema es crear un entorno virtual, un directorio que contiene una instalación de Python de una versión en particular, además de unos cuantos paquetes adicionales.
 
-```
+```console
 python3 -m venv .env
 ```
 
@@ -21,18 +21,18 @@ Una vez creado el entorno virtual, para ejecutarlo
 
 En Windows, ejecuta:
 
-```
+```console
 .env\Scripts\activate.bat
 ```
 
 En distribuciones linux o MacOS, ejecuta:
-```
+```console
 source .env/bin/activate
 ```
 
 Finalmente instalar las dependencias especificadas en `requirements.txt`
 
-```
+```console
 pip install -r requirements.txt
 ```
 
