@@ -1,6 +1,6 @@
 from .RouteStrategy import RouteStrategy
 from pandas.io.parsers import read_csv
-from models import PredictFacade
+from models.PredictFacade import PrectFacade
 
 class PredictionStrategy(RouteStrategy):
 
@@ -28,8 +28,8 @@ class PredictionStrategy(RouteStrategy):
             "bResult"
         ])
 
-    def _filtter(self,teams):
-        self._predict_facate = PrectFacade(self._csv, team_a, team_b)
+    def _filter(self,teams):
+        self._predict_facate = PrectFacade(self._csv, teams[0], teams[1])
 
     def results(self,data_set,teams):
         self._upload(data_set)

@@ -11,17 +11,18 @@ class PrectFacade:
 
 	def execute(self):
 		self._getWinrate()
-		return [self.teamAInfo[0]+self.teamAInfo[1], 
-		self.teamAInfo[2]+self.teamAInfo[3], 
-		(self.teamAInfo[0]+self.teamAInfo[2])*100/(self.teamAInfo[0]+self.teamAInfo[1]+self.teamAInfo[2]+self.teamAInfo[3])]
+		return [self._teamA,
+		self._teamB, 
+		(self.teamAInfo[0]+self.teamAInfo[2])*100/(self.teamAInfo[0]+self.teamAInfo[1]+self.teamAInfo[2]+self.teamAInfo[3]),
+		100 - (self.teamAInfo[0]+self.teamAInfo[2])*100/(self.teamAInfo[0]+self.teamAInfo[1]+self.teamAInfo[2]+self.teamAInfo[3])]
 
 
 	def _getWinrate(self):
 		winsLadoA = self._csv['League'][(self._csv['blueTeamTag'] == self._teamA) & (self._csv['bResult'] == 1)].count()
 		defeatsLadoA = self._csv['League'][(self._csv['blueTeamTag'] == self._teamA) & (self._csv['bResult'] == 0)].count()
-		winsLadoR = self._csv['League'][self._csv['League'][(self._csv['redTeamTag'] == self._teamA) & (self._csv['rResult'] == 1)].count()
-		#defeatsLadoB = self._csv['League'][(self._csv['redTeamTag'] == self._teamA) & (self._csv['rResult'] == 0)].count()
-		self.teamAInfo.append(2)
-		self.teamAInfo.append(3)
-		self.teamAInfo.append(4)
-		self.teamAInfo.append(1)
+		winsLadoR = self._csv['League'][(self._csv['redTeamTag'] == self._teamA) & (self._csv['rResult'] == 1)].count()
+		defeatsLadoB = self._csv['League'][(self._csv['redTeamTag'] == self._teamA) & (self._csv['rResult'] == 0)].count()
+		self.teamAInfo.append(winsLadoA)
+		self.teamAInfo.append(defeatsLadoA)
+		self.teamAInfo.append(winsLadoR)
+		self.teamAInfo.append(defeatsLadoB)

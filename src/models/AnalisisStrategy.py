@@ -7,7 +7,7 @@ class AnalisisStrategy(RouteStrategy):
         self._csv = data_set
 
     def _clean(self):
-        self._csv = self.csv.filter([
+        self._csv = self._csv.filter([
             "blueTeamTag",
             "redTeamTag",
             "gamelength",
@@ -25,9 +25,9 @@ class AnalisisStrategy(RouteStrategy):
             "bResult"
         ])
 
-    def _filter(self, team):
+    def _filter(self, teams):
 
-        data = self._csv[(self._csv["blueTeamTag"] == team[0]) | (self._csv["redTeamTag"] == team[0])]
+        data = self._csv[(self._csv["blueTeamTag"] == teams[0]) | (self._csv["redTeamTag"] == teams[0])]
 
         total_won = 0
         time_average = 0
@@ -46,7 +46,7 @@ class AnalisisStrategy(RouteStrategy):
         content_performance_lose = []
 
         for index, row in data.iterrows():
-            isBlueTeam = row["blueTeamTag"] == team[0]
+            isBlueTeam = row["blueTeamTag"] == teams[0]
             won = int(row["bResult" if isBlueTeam else "rResult"])
 
             count += 1
@@ -78,8 +78,8 @@ class AnalisisStrategy(RouteStrategy):
         self._results = {"Results": data, "Graph": {"won": content_won, "lose": content_lose}}
 
 
-    def results(self,data_set,team):
+    def results(self,data_set,teams):
         self._upload(data_set)
         self._clean()
-        self._filter(team)
+        self._filter(teams)
         return self._results

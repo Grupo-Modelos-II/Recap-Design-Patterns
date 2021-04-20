@@ -11,7 +11,7 @@ class RouteStrategy(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _filtter(self, team):
+    def _filter(self, teams):
         pass
 
     @abstractmethod

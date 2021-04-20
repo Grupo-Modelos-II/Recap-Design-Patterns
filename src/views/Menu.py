@@ -18,6 +18,7 @@ class Menu(Gtk.Window):
 
        
     def handle_analysis(self,widget):
+        self._controller.create_analisis()
         plt.cla()
         plt.clf()
         data = self._controller.exec_strategy(self._combo_box_1.get_active_text())
@@ -41,10 +42,10 @@ class Menu(Gtk.Window):
 
 
     def handle_prediction(self,widget):
+        self._controller.create_prediction()
         blue_team, red_team = (self.combo_box_page21.get_active_text(), self.combo_box_page22.get_active_text())
-        text = (f"Prediction {self.combo_box_page21.get_active_text()} {self.combo_box_page22.get_active_text()}", "No sea imbecil")[blue_team == red_team]
-        
-        print(text)
+        self._controller.exec_strategy(blue_team, red_team)
+        # text = (f"Prediction {self.combo_box_page21.get_active_text()} {self.combo_box_page22.get_active_text()}", "No sea imbecil")[blue_team == red_team]
 
 
     def init_template(self):
