@@ -1,4 +1,4 @@
-# Recap Design Patterns
+<h1 style='text-align:center'> Recap Design Patterns </h1>
 
 Programa para analizar un csv mediante la aplicación de patrones de diseño
 
@@ -6,6 +6,13 @@ Programa para analizar un csv mediante la aplicación de patrones de diseño
 - Jesús Manuel Leiva Bermúdez - 20191020132
 - Jesus Alberto Lozada Montiel - 20191020098
 - Sergio David Paez Suarez - 20191020167
+
+## Vistas de la aplicación
+
+![vista_uno](docs/vista_1.png)
+
+![vista_dos](docs/vista_2.png)
+
 
 ## Ejecución en modo desarrollo
 
@@ -50,3 +57,4 @@ Aplicamos 3 patrones de diseño: Builder, Strategy y Facade.
 ## Diagrama de clases
 
 ![Diagrama_clases](docs/Patrones.png)
+
