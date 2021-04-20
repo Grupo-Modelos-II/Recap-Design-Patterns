@@ -33,6 +33,7 @@ class AnalisisStrategy(RouteStrategy):
 
 
         total_won = 0
+        total_lose = 0
         time_average = 0
         total_inhibs = 0
         total_dragons = 0
@@ -40,7 +41,7 @@ class AnalisisStrategy(RouteStrategy):
         total_barons = 0
         total_heralds = 0
         total = 0
-        count = 1
+        count = 0
 
         content_time_won = []
         content_performance_won = []
@@ -67,17 +68,27 @@ class AnalisisStrategy(RouteStrategy):
             total_heralds += heralds
             total = .15*dragons + .3*towers + .3*inhibs + .1*heralds + .15*barons
             if won:
-                total_won += won
+                total_won += 1
                 content_time_won.append(time)
                 content_performance_won.append(total)
             else:
+                total_lose += 1
                 content_time_lose.append(time)
                 content_performance_lose.append(total)
         
         content_won = {"time": content_time_won, "performance": content_performance_won}
         content_lose = {"time": content_time_lose, "performance": content_performance_lose}
         time_average /= count
-        data = {"inhibs": total_inhibs, "dragons": total_dragons, "won": total_won, "average": time_average}
+        data = {
+            "Inhibidores Destruidos": f"{total_inhibs}",
+            "Dragones Asesinados": f"{total_dragons}",
+            "Torres Destruidas": f"{total_towers}",
+            "Heraldos Asesinados": f"{total_heralds}",
+            "Barones Asesinados": f"{total_barons}",
+            "Partidas Ganadas": total_won,
+            "Partidas Perdidas": total_lose,
+            "Tiempo Promedio": f"{time_average:.6} Minutos"
+        }
         self._results = {"Results": data, "Graph": {"won": content_won, "lose": content_lose}}
 
 

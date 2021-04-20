@@ -104,8 +104,9 @@ class BuildNotebook(BuildGUI):
         plt.clf()
         data = self._controller.exec_strategy(self._combo_box_1.get_active_text())
 
-        label = data["Results"]
-        label = f"Total Inhibidores: {label['inhibs']} Inhibidores Destruidos\nTotal Dragones: {label['dragons']} Dragones Asesinados\nPartidas Ganadas: {label['won']}\nTiempo Promedio: {label['average']:.6} Minutos"
+        label = ""
+        for key, value in data["Results"].items():
+            label += f"{key}: {value}\n"
 
         self._label_result.set_label(label)
 
