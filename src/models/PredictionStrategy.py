@@ -29,11 +29,11 @@ class PredictionStrategy(RouteStrategy):
             "League"
         ])
 
-    def _filter(self,teams):
+    def _filter(self, teams):
         self._predict_facate = PrectFacade(self._csv, teams[0], teams[1])
         self._results = self._predict_facate.execute()
 
-    def results(self,data_set,teams):
+    def results(self, data_set, teams):
         self._upload(data_set)
         self._clean()
         self._filter(teams)
